@@ -9,7 +9,7 @@ import utils.ConfigReader;
 
 public class AddEmployeeTest extends CommonMethods {
 
-    @Test
+    @Test (groups = "smoke")
     public void addEmployee (){
         LoginPage loginPage=new LoginPage();
         loginPage.login(ConfigReader.getPropertiesValue("username"),ConfigReader.getPropertiesValue("password"));

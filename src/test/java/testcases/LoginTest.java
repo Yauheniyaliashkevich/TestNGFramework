@@ -10,7 +10,7 @@ import utils.ConfigReader;
 
 public class LoginTest extends CommonMethods {
 
-    @Test
+    @Test (groups = "smoke")
     public void adminLogin(){
 
         LoginPage loginPage=new LoginPage();
@@ -25,7 +25,7 @@ public class LoginTest extends CommonMethods {
         Assert.assertTrue(dashBoardPage.welcomeMessage.isDisplayed(), "welcome message is not displayed");
     }
 
-    @Test (dataProvider = "invalidData")
+    @Test (dataProvider = "invalidData",groups = "regression")
     public void invalidLoginErrorMessageValidation (String username, String password, String message){
         LoginPage loginPage=new LoginPage();
         sendTest(loginPage.usernameBox,username);
