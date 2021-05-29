@@ -10,6 +10,13 @@ public class DashBoardPage extends CommonMethods {
     @FindBy (id = "welcome")
     public WebElement welcomeMessage;
 
+    @FindBy (id= "menu_pim_viewPimModule")
+    public WebElement pimOption;
+
+    @FindBy (id= "menu_pim_addEmployee")
+    public WebElement addEmployeeButton;
+
+
     public DashBoardPage (){
         PageFactory.initElements(driver,this);
     }
