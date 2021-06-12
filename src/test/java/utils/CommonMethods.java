@@ -1,9 +1,8 @@
 package utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,6 +11,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class CommonMethods {
@@ -37,11 +40,11 @@ public class CommonMethods {
 
         }
         driver.get(ConfigReader.getPropertiesValue("url"));
-        driver.manage().window().maximize();
+        //driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Constants.IMPLICIT_WAIT,TimeUnit.SECONDS);
     }
 
-    public static void sendTest(WebElement element, String textToSend){
+    public static void sendText(WebElement element, String textToSend){
         element.clear();
         element.sendKeys(textToSend);
     }
@@ -68,6 +71,24 @@ public class CommonMethods {
     public static void jsClick(WebElement element){
         getJSExecutor().executeScript("argument[0].click()",element);
     }
+
+    public static void takeScreenshot(String fileName){
+        TakesScreenshot ts=(TakesScreenshot) driver;
+        File sourceFile= ts.getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(sourceFile, new File (Constants.SCREENSHOT_FILEPATH + fileName +" "+ getTimeStamp("yyyy-MM-dd-HH-mm-ss")+".png" ));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static String getTimeStamp(String pattern){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
+    }
+
+
     /*@Test
     public void test(){
         System.out.println(System.getProperty("os.name"));
@@ -75,7 +96,7 @@ public class CommonMethods {
         System.out.println(System.getProperty("user.dir"));
     }
 */
-   // @AfterMethod (alwaysRun = true)
+   @AfterMethod (alwaysRun = true)
     public static void tearDown(){
         if(driver!=null){
             driver.quit();

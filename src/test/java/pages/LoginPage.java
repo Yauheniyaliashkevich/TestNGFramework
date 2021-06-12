@@ -26,8 +26,8 @@ public class LoginPage extends CommonMethods{
     }
 
     public void login(String username, String password){
-        sendTest(usernameBox, username);
-        sendTest(passwordBox, password);
+        sendText(usernameBox, username);
+        sendText(passwordBox, password);
         click(loginBtn);
     }
 }
